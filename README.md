@@ -18,6 +18,6 @@ Can't really think of one at the minute...
 
 ## Usage
 
-`:Echo lemons dog fish` will echo "lemons dog fish" in the top right
+`:Echo "lemons dog fish"` will echo "lemons dog fish" in the top right
 
 For further information, please see the [docs](./doc/flocho.txt)

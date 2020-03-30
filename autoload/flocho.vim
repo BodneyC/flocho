@@ -41,9 +41,16 @@ function! s:msg_close(timerid) abort
 endfunction
 
 function! flocho#add_message(msg, ...) abort
+  try
+    let l:msg = eval(a:msg)
+  catch /.*/
+    let l:e = substitute(v:exception, '^[^E]*', '', '')
+    echohl ErrorMsg | echo l:e | echohl None
+    return
+  endtry
   if g:flocho_width == -1 | let g:flocho_width = &columns / 3 | endif
 
-  let l:msg_lines = split(a:msg, '\%' . g:flocho_width . 'c')
+  let l:msg_lines = split(l:msg, '\%' . g:flocho_width . 'c')
   let l:height = len(l:msg_lines)
   let l:column = &columns - g:flocho_width - g:flocho_inset - 1
 
@@ -65,11 +72,13 @@ function! flocho#add_message(msg, ...) abort
   call setbufvar(l:bufid, '&relativenumber', 0)
   call setbufvar(l:bufid, '&hidden',         1)
   call setbufvar(l:bufid, '&buftype',        'nofile')
-  call setbufvar(l:bufid, '&winhighlight',   'Normal:' . get(a:, 1, g:flocho_default_hl))
+  call setbufvar(l:bufid, '&winhighlight',   'Normal:'
+        \ . get(a:, 1, g:flocho_default_hl))
 
   call nvim_buf_set_lines(bufid, 0, -1, 0, l:msg_lines)
 
   let l:opts.bufid = l:bufid
-  let l:opts.timerid = timer_start(g:flocho_timeout, function('s:msg_close'), { 'repeat': -1 })
+  let l:opts.timerid = timer_start(
+        \ g:flocho_timeout, function('s:msg_close'), { 'repeat': -1 })
   call add(s:msgs, l:opts)
 endfunction
