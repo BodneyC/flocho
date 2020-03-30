@@ -23,14 +23,16 @@ function! s:msg_close(timerid) abort
     call remove(s:msgs, l:cur_msg_idx)
   endif
 
-  let s:next_msg_row -= l:cur_msg.height + g:flocho_inset
+  let l:shift = l:cur_msg.height + g:flocho_inset
+
+  let s:next_msg_row -= l:shift
 
   " Reorganise messages
   for l:msg in s:msgs
     let l:win_idx = bufwinid(l:msg.bufid)
     if l:win_idx == -1 | continue | endif
-    if l:msg.row <= l:cur_msg.height + g:flocho_inset | continue | endif
-    let l:msg.row -= l:cur_msg.height + g:flocho_inset
+    if l:msg.row <= l:shift | continue | endif
+    let l:msg.row -= l:shift
     let l:msg_copy = copy(l:msg)
     call remove(l:msg_copy, 'bufid')
     call remove(l:msg_copy, 'timerid')
@@ -53,6 +55,10 @@ function! flocho#add_message(msg, ...) abort
   let l:msg_lines = split(l:msg, '\%' . g:flocho_width . 'c')
   let l:height = len(l:msg_lines)
   let l:column = &columns - g:flocho_width - g:flocho_inset - 1
+
+  while s:next_msg_row + l:height > &lines - 1
+    call <SID>msg_close(s:msgs[0].timerid)
+  endwhile
 
   let l:opts = {
         \   'relative': 'editor',
