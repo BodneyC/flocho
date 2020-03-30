@@ -20,4 +20,4 @@ Can't really think of one at the minute...
 
 `:Echo lemons dog fish` will echo "lemon dog fish" in the top right
 
-For further information, please see the [README](./README.md)
+For further information, please see the [docs](./doc/flocho.txt)
