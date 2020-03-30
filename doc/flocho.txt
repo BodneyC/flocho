@@ -1,0 +1,157 @@
+*Flocho* *flocho-vim* - Floating `echo` facility
+
+            ,--,                        ,---,                ~
+    .--., ,--.'|                      ,--.' |                ~
+  ,--.'  \|  | :     ,---.            |  |  :       ,---.    ~
+  |  | /\/:  : '    '   ,'\           :  :  :      '   ,'\   ~
+  :  : :  |  ' |   /   /   |   ,---.  :  |  |,--. /   /   |  ~
+  :  | |-,'  | |  .   ; ,. :  /     \ |  :  '   |.   ; ,. :  ~
+  |  : :/||  | :  '   | |: : /    / ' |  |   /' :'   | |: :  ~
+  |  |  .''  : |__'   | .; :.    ' /  '  :  | | |'   | .; :  ~
+  '  : '  |  | '.'|   :    |'   ; :__ |  |  ' | :|   :    |  ~
+  |  | |  ;  :    ;\   \  / '   | '.'||  :  :_:,' \   \  /   ~
+  |  : |  |  ,   /  `----'  |   :    :|  | ,'      `----'    ~
+  |  |,'   ---`-'            \   \  / `--''                  ~
+  `--'                        `----'                         ~
+
+==========================================================================
+CONTENTS                                                    *FlochoContents*
+
+
+  1. Usage ..................................... |FlochoUsage|
+    a. Functions ............................... |FlochoFunctions|
+    b. Commands ................................ |FlochoCommands|
+  2. Configuration ............................. |FlochoConfiguration|
+  3. TODOs ..................................... |FlochoTODOs|
+  4. Bugs ...................................... |FlochoBugs|
+  5. License ................................... |FlochoLicense|
+
+
+==========================================================================
+USAGE                                                          *FlochoUsage*
+
+
+This section will define the usage of the plugin, the main function is 
+ |VirkCreateFlocho|, after that, the |autocmd| commands should do the rest
+
+
+--------------------------------------------------------------------------
+FUNCTIONS                                                  *FlochoFunctions*
+
+
+There is really only one exposed function which adds a message to the 
+ list:
+
+
+  *flocho#add_message*
+
+      Params:
+        `msg` - The message to write
+        [`col`] - The |highlight| group with which to show the message
+
+      Desc: Adds `msg` to the list of messages with the highlighting of
+            `col` (defaults to |g:flocho_default_hl|)
+
+
+
+--------------------------------------------------------------------------
+COMMANDS                                                    *FlochoCommands*
+
+
+All commands are intended to mimic those of |Vim| itself, i.e.:
+
+      - |Echo|    -> |echo|
+      - |Echomsg| -> |echomsg|
+      - |Echoerr| -> |echoerr|
+      - |Echohl|  -> |echohl|
+
+
+  *Echo* {msg}
+
+    Echo the message using |g:flocho_default_hl|
+
+
+  *Echomsg* {msg}
+
+    As |Echo| but always use |Normal| group
+
+
+  *Echoerr* {msg}
+
+    As |Echo| but always use |ErrorMsg|
+
+
+  *Echohl* {group}
+
+    Set |g:flocho_default_hl| to {group}
+
+
+
+==========================================================================
+CONFIGURATION                                          *FlochoConfiguration*
+
+
+Not really much to it, but there are a couple of global vars:
+
+  *g:flocho_default_hl*
+
+      Default: |NormalFloat|
+
+      Desc: The default group to be used by |Echo|
+
+
+  *g:flocho_width*
+
+      Default: `-1`
+
+      Desc: Width of |flocho| messages, if `-1` then `&columns / 3` is 
+            used (and calculated with each call)
+
+
+  *g:flocho_timeout*
+
+      Default: `2500`
+
+      Desc: Length of time to leave message on screen
+
+
+  *g:flocho_inset*
+
+      Default: `1`
+
+      Desc: The number of rows/columns by which to in-set messages
+
+
+
+==========================================================================
+TODOS                                                       *FlochoTODOs*
+
+
+There are a couple of bit that still need doing for this project to be 
+ called complete
+
+ - [ *FlochoTesting* ] Test the thing with varied input sizes...
+
+
+
+==========================================================================
+BUGS                                                         *FlochoBugs*
+
+
+ - None, so far
+
+
+
+==========================================================================
+LICENSE                                                   *FlochoLicense*
+
+
+This plugin is distributed and can be redistributed under the GPL v2.0
+
+  See `$(git rev-parse --show-toplevel)/LICENSE`
+
+
+
+==========================================================================
+
+" vim: ft=help tw=75
